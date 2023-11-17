@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回收站</title>
+    <script src="./jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="../layui.css">
+    <script src="../layui.js"></script>
+    <style>
+        .add {
+            float: left;
+            width: 68px;
+            height: 23px;
+        }
+
+        #addBtn:hover {
+            color: white;
+            background-color: aqua;
+            border: 1px solid aqua;
+        }
+
+        .divtext {
+            float: left;
+            width: 258px;
+            height: 26px;
+            margin-top: 10px;
+        }
+
+        .adddiv {
+            width: 100%;
+            height: 30px;
+        }
+
+        .layui-text p:last-child {
+            margin-bottom: 0;
+            margin-top: -1px;
+            margin-left: 130px;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+        tr th {
+            text-align: center;
+        }
+
+        tr td {
+            text-align: center;
+        }
+
+        img {
+            float: left;
+            width: 50px;
+            height: 50px;
+
+        }
+
+        .contain {
+            float: left;
+        }
+
+        .search {
+            color: blue;
+            border: none;
+            margin-left: 10px;
+        }
+
+        .search:hover {
+            color: white;
+            background-color: aqua;
+            border: 1px solid aqua;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table border="1" class="table" id="tablelist">
+        <thead>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th>排序</th>
+                <th>商品</th>
+                <th>价格</th>
+                <th>库存</th>
+                <th>实际销量</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        底部固定区域
+    </div>
+    </div>
+</body>
+<script>
+    $(function () {
+        goodslist()
+    })
+    //分页
+    // 给编辑按钮添加点击事件
+    $('tbody').on('click', '#search', function () {
+        let id = $(this).data('id');
+        $.ajax({
+            url: `https://manage.zzgoodqc.cn/api/goods/${id}`,
+            type: 'GET',
+            headers: {
+                Authorization: localStorage.getItem("token"),
+            },
+            success: function (res) {
+                console.log(res);
+                // 将获取到的商品信息填充到弹窗中
+                $('#sort').val(res.data.sort);
+                $('#title').val(res.data.title); $('#price').val(res.data.price);
+                $('#stock').val(res.data.stock);
+                $('#thumbnail').val(res.data.thumbnail);
+                $('#description').val(res.data.description);
+                // 显示弹窗
+                $('.popup').show();
+            }
+        })
+    });
+    $('tbody').on('click', '#shanchu', function () {
+        let id = $(this).data('id');
+        if (confirm(`确认删除ID为${id}的数据吗？`)) {
+            $.ajax({
+                url: `https://manage.zzgoodqc.cn/api/goods/solt/${id}`,
+                type: 'DELETE',
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                },
+                success: function (res) {
+                    console.log(res.data);
+                    // 从商品列表中移除删除的商品
+                    $('tbody').find('[data-id="' + id + '"]').parents('tr').remove();
+                    alert('删除成功');
+                    goodslist()
+                }
+
+            })
+        }
+    });
+    $('tbody').on('click', '#search', function () {
+        let id = $(this).data('id');
+        $.ajax({
+            url: `https://manage.zzgoodqc.cn/api/goods/${id}`,
+            type: 'GET',
+            headers: {
+                Authorization: localStorage.getItem("token"),
+            },
+            success: function (res) {
+                console.log(res);
+                // 将获取到的商品信息填充到弹窗中
+                $('#sort').val(res.data.sort);
+                $('#title').val(res.data.title); $('#price').val(res.data.price);
+                $('#stock').val(res.data.stock);
+                $('#thumbnail').val(res.data.thumbnail);
+                $('#description').val(res.data.description);
+                // 显示弹窗
+                $('.popup').show();
+            }
+        })
+    });
+    // 按钮添加点击事件
+    $('#add-Btn').on('click', function () {
+        $('#editPopup').show();
+    })
+
+    $('#closePopup').on('click', function () {
+        $('#editPopup').hide();
+    })
+    $('#addBtn').on('click', function (e) {
+        e.preventDefault();
+        let sort = $('#sort').val()
+        let thumbnail = $('#thumbnail').val()
+        let title = $('#title').val()
+        let type = $('#leixing').val()
+        let price = $('#price').val()
+        let stock = $('#stock').val()
+        let actual_sales = $('#actual_sales').val()
+        let status = $('#input option:selected').val()
+        let category = $('#category').val()
+        let data = {
+            sort,
+            thumbnail,
+            title,
+            type,
+            price,
+            stock,
+            actual_sales,
+            status,
+            category,
+        }
+        console.log(data);
+        $.ajax({
+            url: 'https://manage.zzgoodqc.cn/api/goods/',
+            type: 'POST',
+            data: data,
+            headers: {
+                Authorization: localStorage.getItem("token"),
+            },
+            success: function (res) {
+                console.log(res);
+                $('#editPopup').hide();
+                goodslist()
+            }
+        });
+    });
+    //请求获取列表
+    function goodslist() {
+        $.ajax({
+            url: 'https://manage.zzgoodqc.cn/api/goods?is_recycle=1',
+            type: 'GET',
+            headers: {
+                Authorization: localStorage.getItem("token"),
+            },
+            success: function (res) {
+                console.log(res);
+                let arr = res.data.data;
+                let html = '';
+                arr.forEach((item, index) => {
+                    html += `
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>${item.sort}</td>
+                    <td>
+                        <img src="${item.thumbnail}" alt="">
+                        <span>${item.title}</span>
+                    </td>
+                    <td>${item.price}</td>
+                    <td>${item.stock}</td>
+                    <td>${item.actual_sales}</td>
+                    <td>${item.create_time}</td>
+                    <td>
+                        <button class="search" id="search" data-id="${item.id}">编辑</button>
+                        <button class="search" id="shanchu" data-id="${item.id}">删除</button>
+                    </td>
+                </tr>
+                `
+                })
+                $('tbody').html(html);
+            }
+        })
+
+    }
+</script>
+
+</html>

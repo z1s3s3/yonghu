@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页面</title>
+    <script src="./jquery-3.7.1.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-image: url("https://img-blog.csdnimg.cn/366bc0c8076843659252dc6c949c370e.jpeg");
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .form-horizontal {
+            margin: 30px auto;
+            width: 450px;
+            height: 335px;
+            box-shadow: -10px -10px 10px, 10px 10px 10px;
+            background: rgba(10, 10, 10, 0.4);
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        div {
+            margin: 10px auto;
+        }
+
+        .form-group {
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            outline: none;
+        }
+
+        .btn-default {
+            margin: 0 50px;
+        }
+
+        .form-horizontal .control-label {
+            padding-top: 19px;
+            margin-bottom: 0;
+            margin-left: 10px;
+            text-align: right;
+        }
+
+        .col-sm-10 {
+            width: 79%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <form class="form-horizontal">
+            <h3>登录</h3>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">username</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="username" placeholder="username">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="RememberMe"> Remember me
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" id="Signin">Sign in</button>
+                    <button type="submit" class="btn btn-default" id="register">register</button>
+                </div>
+            </div>
+    </div>
+    </form>
+</body>
+<script>
+    $(document).ready(function () {
+        $('#RememberMe').change(function () {
+            if ($(this).is(':checked')) {
+                localStorage.setItem('username', username);
+            } else {
+                localStorage.removeItem('username');
+            }
+        })
+        $('#register').click(function () {
+            event.preventDefault();
+            window.location.href = "Register.html";
+        });
+        $('#Signin').click(function () {
+            event.preventDefault();
+            let username = $("#username").val();
+            let password = $("#password").val();
+            let expiresTime = '1y'
+            let obj = {
+                expiresTime: '1y',
+                username,
+                password,
+            }
+            console.log(obj);
+            $.ajax({
+                url: 'http://manage.zzgoodqc.cn/api/user/login',
+                type: 'POST',
+                data: obj,
+                headers: {
+                    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InloY2hzIiwiaWQiOjE0NiwibW9iaWxlIjoiMTgzMjI0NjEzNTMiLCJlbWFpbCI6IjEyMjIzQHFxLmNvbSIsInFxIjoiMTIzNDU2Nzg4OSIsImlhdCI6MTcwMDA0OTA3OSwiZXhwIjoxNzAwMDQ5MTA5fQ.HkWLUcFZJWq9O647A-k6ad67UFQZBSM-fDbnQ-kccSg",
+                },
+                success: function (res) {
+                    console.log(res.data.token);
+                    localStorage.setItem('token', res.data.token)
+                    if (res.status === 200) {
+                        alert('登录成功');
+                        location.assign("shop.html");
+                    } else {
+                        alert(res.msg);
+                    }
+                }
+            })
+        })
+    })
+</script>
+
+</html>

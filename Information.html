@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户信息</title>
+    <script src="./jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <table border="1" class="table" id="tablelist">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>username</th>
+                <th>password</th>
+                <th>email</th>
+                <th>qq</th>
+                <th>mobile</th>
+                <th>created_at</th>
+                <th>updated_at</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+<script>
+    $(document).ready(function (event) {
+        $.ajax({
+            url: 'https://manage.zzgoodqc.cn/api/user/userinfo',
+            type: 'GET',
+            headers: {
+                Authorization: localStorage.getItem("token"),
+            },
+            success: function (res) {
+                console.log(res);
+
+                let arr = Array(res.data);
+                let html = '';
+                console.log(arr);
+                arr.forEach(function (item) {
+                    html += `
+                <tr>
+                    <td>${item.id}</td>
+                    <td>${item.username}</td>
+                    <td>${item.password}</td>
+                    <td>${item.email}</td>
+                    <td>${item.qq}</td>
+                    <td>${item.mobile}</td>
+                    <td>${item.created_at}</td>
+                    <td>${item.updated_at}</td>
+                </tr>
+                `
+                })
+                $('tbody').html(html);
+            }
+        })
+    })
+</script>
+
+</html>

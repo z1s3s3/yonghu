@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品页面</title>
+    <script src="./jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="./layui.css">
+    <!-- <link rel="stylesheet" href="../iconfont.ttf">
+    <link rel="stylesheet" href="../iconfont.woff"> -->
+    <script src="./layui.js"></script>
+    <style>
+        .add {
+            float: left;
+            width: 68px;
+            height: 23px;
+        }
+
+        #addBtn:hover {
+            color: white;
+            background-color: aqua;
+            border: 1px solid aqua;
+        }
+
+        .divtext {
+            float: left;
+            width: 258px;
+            height: 26px;
+            margin-top: 10px;
+        }
+
+        .adddiv {
+            width: 100%;
+            height: 30px;
+        }
+
+        .layui-text p:last-child {
+            margin-bottom: 0;
+            margin-top: -1px;
+            margin-left: 130px;
+        }
+
+        .table {
+            width: 100%;
+        }
+
+        tr th {
+            text-align: center;
+        }
+
+        tr td {
+            text-align: center;
+        }
+
+        img {
+            float: left;
+            width: 50px;
+            height: 50px;
+
+        }
+
+        .contain {
+            float: left;
+        }
+
+        .search {
+            color: blue;
+            border: none;
+            margin-left: 10px;
+        }
+
+        .search:hover {
+            color: white;
+            background-color: aqua;
+            border: 1px solid aqua;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 55%;
+            left: 80%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            margin-left: -270px;
+        }
+
+        .layui-btn {
+            margin-left: -385px;
+            left: 0;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid transparent;
+            padding: 0 30px;
+            background-color: #16baaa;
+            color: #fff;
+            white-space: nowrap;
+            text-align: center;
+            font-size: 14px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo layui-hide-xs layui-bg-black">商品列表</div>
+            <!-- 头部区域（可配合layui 已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <!-- 移动端显示 -->
+                <!-- <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
+                    商品管理
+                </li> -->
+                <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">商品</a></li>
+                <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">商品管理</a></li>
+                <li class="layui-nav-item layui-hide-xs"><a href="javascript:;">出售中</a></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item layui-hide layui-show-sm-inline-block">
+                    <a href="javascript:;">
+                        <img src="https://tse1-mm.cn.bing.net/th/id/OIP-C.a_2XJOKnYxsnGU-tYazCWwHaF7?pid=ImgDet&rs=1"
+                            class="layui-nav-img">
+                        个人
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="Information.html" id="Information">个人中心</a></dd>
+                        <dd><a href="javascript:;">设定</a></dd>
+                        <dd><a href="login.html">注销</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-more-vertical"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a id="goodShop">商品管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">出售中</a></dd>
+                            <dd><a href="javascript:;">已售完</a></dd>
+                            <dd><a href="javascript:;">仓库中</a></dd>
+                            <dd><a href="RecycleBin.html">回收站</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">商品分类</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">list 1</a></dd>
+                            <dd><a href="javascript:;">list 2</a></dd>
+                            <dd><a href="javascript:;">超链接</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item"><a href="javascript:;">click menu item</a></li>
+                    <li class="layui-nav-item"><a href="javascript:;">the links</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div style="padding: 15px;">
+                <blockquote class="layui-elem-quote layui-text">
+                    <div class="adddiv">
+                        <button type="button" class="layui-btn layui-btn-primary" lay-on="iframe" class="addbtn"
+                            id="add-Btn">+添加商品</button>
+                        <p class="divtext" id="text">商品显示数量：已使用117个/无限制</p>
+                    </div>
+                    商品名称：<input type="text" class="username" id="name">
+                    商品分类：<input type="text" class="typelis" id="typelis">
+                    创建时间：<input type="date" class="house" id="house">
+                    商品类型：<input type="text" class="type" id="type">
+                    <button class="search" id="search">搜索</button>
+                    <button class="search" id="Reset">重置</button>
+                    <button class="search" id="Export">导出</button>
+                    <button class="search" id="clone">复制商品加载</button>
+                </blockquote>
+                <div class="layui-card layui-panel">
+                    <div class="layui-card-body">
+                        <table border="1" class="table" id="tablelist">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox"></th>
+                                    <th>排序</th>
+                                    <th>商品</th>
+                                    <th>价格</th>
+                                    <th>库存</th>
+                                    <th>实际销量</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <br><br>
+            </div>
+        </div>
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            底部固定区域
+        </div>
+    </div>
+    <div id="editPopup" class="popup">
+        <h2>商品列表</h2>
+        <form id="editForm">
+            <div>
+                <label for="title">排序:</label>
+                <input type="text" id="sort">
+            </div>
+            <div>
+                <label for="price">图片:</label>
+                <input type="text" id="thumbnail">
+            </div>
+            <div>
+                <label for="price">商品:</label>
+                <input type="text" id="title">
+            </div>
+            <div>
+                <label for="price">类型:</label>
+                <input type="text" id="leixing">
+            </div>
+            <div>
+                <label for="price">价格:</label>
+                <input type="text" id="price">
+            </div>
+            <div>
+                <label for="price">库存:</label>
+                <input type="text" id="stock">
+            </div>
+            <div>
+                <label for="price">销量:</label>
+                <input type="text" id="actual_sales">
+            </div>
+            <div>
+                <label for="price">状态:</label>
+                <select style="width:100px;height:30px" id="input">
+                    <option value="请选择">请选择</option>
+                    <option value="on_shelf">上架</option>
+                    <option value="off_shelf">下架</option>
+                    <option value="recycle_bin">回收站</option>
+                </select>
+            </div>
+            <div>
+                <label for="price">分类:</label>
+                <input type="text" id="category">
+            </div>
+            <!-- 其他商品信息字段类似 -->
+            <div>
+                <button type="submit" id="addBtn">确认</button>
+                <button type="button" id="closePopup">Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+
+    $(function () {
+        goodslist()
+    })
+    //分页
+    // 给编辑按钮添加点击事件
+    $('tbody').on('click', '#search', function () {
+        let id = $(this).data('id');
+        $.ajax({
+            url: `https://manage.zzgoodqc.cn/api/goods/${id}`,
+            type: 'GET',
+            headers: {
+                Authorization: localStorage.getItem("token"),
+            },
+            success: function (res) {
+                console.log(res);
+                // 将获取到的商品信息填充到弹窗中
+                $('#sort').val(res.data.sort);
+                $('#title').val(res.data.title); $('#price').val(res.data.price);
+                $('#stock').val(res.data.stock);
+                $('#thumbnail').val(res.data.thumbnail);
+                $('#description').val(res.data.description);
+                // 显示弹窗
+                $('.popup').show();
+            }
+        })
+    });
+    $('tbody').on('click', '#dele', function () {
+        let id = $(this).data('id');
+        if (confirm(`确认删除ID为${id}的数据吗？`)) {
+            $.ajax({
+                url: `https://manage.zzgoodqc.cn/api/goods/solt/:id`,
+                type: 'DELETE',
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                },
+                success: function (res) {
+                    // 从商品列表中移除删除的商品
+                    $('tbody').find('[data-id="' + id + '"]').parents('tr').remove();
+                    alert('删除成功');
+                    goodslist()
+                }
+            })
+        }
+    });
+    $('tbody').on('click', '#search', function () {
+        let id = $(this).data('id');
+        $.ajax({
+            url: `https://manage.zzgoodqc.cn/api/goods/${id}`,
+            type: 'GET',
+            headers: {
+                Authorization: localStorage.getItem("token"),
+            },
+            success: function (res) {
+                console.log(res);
+                // 将获取到的商品信息填充到弹窗中
+                $('#sort').val(res.data.sort);
+                $('#title').val(res.data.title); $('#price').val(res.data.price);
+                $('#stock').val(res.data.stock);
+                $('#thumbnail').val(res.data.thumbnail);
+                $('#description').val(res.data.description);
+                // 显示弹窗
+                $('.popup').show();
+            }
+        })
+    });
+    // 按钮添加点击事件
+    $('#add-Btn').on('click', function () {
+        $('#editPopup').show();
+    })
+
+    $('#closePopup').on('click', function () {
+        $('#editPopup').hide();
+    })
+    $('#addBtn').on('click', function (e) {
+        e.preventDefault();
+        let sort = $('#sort').val()
+        let thumbnail = $('#thumbnail').val()
+        let title = $('#title').val()
+        let type = $('#leixing').val()
+        let price = $('#price').val()
+        let stock = $('#stock').val()
+        let actual_sales = $('#actual_sales').val()
+        let status = $('#input option:selected').val()
+        let category = $('#category').val()
+        let data = {
+            sort,
+            thumbnail,
+            title,
+            type,
+            price,
+            stock,
+            actual_sales,
+            status,
+            category,
+        }
+        console.log(data);
+        $.ajax({
+            url: 'https://manage.zzgoodqc.cn/api/goods/',
+            type: 'POST',
+            data: data,
+            headers: {
+                Authorization: localStorage.getItem("token"),
+            },
+            success: function (res) {
+                console.log(res);
+                $('#editPopup').hide();
+                goodslist()
+            }
+        });
+    });
+    //请求获取列表
+    function goodslist() {
+        $.ajax({
+            url: 'https://manage.zzgoodqc.cn/api/goods',
+            type: 'GET',
+            headers: {
+                Authorization: localStorage.getItem("token"),
+            },
+            success: function (res) {
+                console.log(res);
+                let arr = res.data.data;
+                let html = '';
+                arr.forEach((item, index) => {
+                    html += `
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>${item.sort}</td>
+                    <td>
+                        <img src="${item.thumbnail}" alt="">
+                        <span>${item.title}</span>
+                    </td>
+                    <td>${item.price}</td>
+                    <td>${item.stock}</td>
+                    <td>${item.actual_sales}</td>
+                    <td>${item.create_time}</td>
+                    <td>
+                        <button class="search" id="search" data-id="${item.id}">编辑</button>
+                        <button class="search" id="dele" data-id="${item.id}">删除</button>
+                    </td>
+                </tr>
+                `
+                })
+                $('tbody').html(html);
+            }
+        })
+
+    }
+    //     layui.use(['element', 'layer', 'util'], function () {
+    //         var element = layui.element;
+    //         var layer = layui.layer;
+    //         var util = layui.util;
+    //         var $ = layui.$;
+
+    //         //头部事件
+    //         util.event('lay-header-event', {
+    //             menuLeft: function (othis) { // 左侧菜单事件
+    //                 layer.msg('展开左侧菜单的操作', { icon: 0 });
+    //             },
+    //             menuRight: function () {  // 右侧菜单事件
+    //                 layer.open({
+    //                     type: 1,
+    //                     title: '更多',
+    //                     content: '<div style="padding: 15px;">处理右侧面板的操作</div>',
+    //                     area: ['260px', '100%'],
+    //                     offset: 'rt', // 右上角
+    //                     anim: 'slideLeft', // 从右侧抽屉滑出
+    //                     shadeClose: true,
+    //                     scrollbar: false
+    //                 });
+    //             }
+    //         });
+    //     });
+    // });
+</script>
+
+</html>
