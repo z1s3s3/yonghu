@@ -7,8 +7,6 @@
     <title>商品页面</title>
     <script src="./jquery-3.7.1.min.js"></script>
     <link rel="stylesheet" href="./layui.css">
-    <!-- <link rel="stylesheet" href="../iconfont.ttf">
-    <link rel="stylesheet" href="../iconfont.woff"> -->
     <script src="./layui.js"></script>
     <style>
         .add {
@@ -386,6 +384,7 @@
             success: function (res) {
                 console.log(res);
                 let arr = res.data.data;
+                console.log(arr);
                 let html = '';
                 arr.forEach((item, index) => {
                     html += `

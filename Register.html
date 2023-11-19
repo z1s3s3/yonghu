@@ -130,7 +130,7 @@
         $('#btncaptcha').click(function (event) {
             event.preventDefault();
             let phon = $('#mobile').val();
-            $.get('http://manage.zzgoodqc.cn/api/user/captcha?mobile=' + phon,
+            $.get('https://manage.zzgoodqc.cn/api/user/captcha' + phon,
                 function (res) {
                     $('#captchadiv').html(res)
                 });
