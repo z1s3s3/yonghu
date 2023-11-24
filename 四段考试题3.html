@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图</title>
+</head>
+
+<body>
+    <div id="container" style="width: 800px; height: 800px"></div>
+    <div id="panel" style="width: 800px; height: 500px"></div>
+    <style>
+        #container {
+            margin: auto;
+        }
+
+        #panel {
+            display: none;
+        }
+
+        .custom-content-marker {
+            position: relative;
+            width: 25px;
+            height: 34px;
+        }
+
+        .custom-content-marker img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .custom-content-marker .close-btn {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            width: 15px;
+            height: 15px;
+            font-size: 12px;
+            background: #ccc;
+            border-radius: 50%;
+            color: #fff;
+            text-align: center;
+            line-height: 15px;
+            box-shadow: -1px 1px 1px rgba(10, 10, 10, 0.2);
+        }
+
+        .custom-content-marker .close-btn:hover {
+            background: #666;
+        }
+    </style>
+    <button id="showScoresBtn">显示路线</button>
+    <input type="text" id="qdInput" placeholder="请输入起点" />
+    <input type="text" id="zdInputs" placeholder="请输入终点" />
+    <button id="show">规划</button>
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode: "48557296398204ef1d909c85761244e8",
+        };
+    </script>
+    <script src="https://webapi.amap.com/loader.js"></script>
+    <script type="text/javascript"
+        src="https://webapi.amap.com/maps?v=2.0&key=6f800dacdde97cdb4dc7efea3e43e500&plugin=AMap.ToolBar,AMap.Driving"></script>
+    <script type="text/javascript">
+        //   加载地图
+        const map = new AMap.Map("container", {
+            viewMode: "2D", // 默认使用 2D 模式
+            zoom: 15, //初始化地图层级
+            center: [113.42857, 34.772388], //初始化地图中心点
+        });
+        // 创建Marker对象
+        const position = new AMap.LngLat(113.42857, 34.772388); // Marker经纬度
+        const marker = new AMap.Marker({
+            position: position,
+            icon: "./定位.png",
+            offset: new AMap.Pixel(-13, -30), // 以 icon 的 [center bottom] 为原点
+        });
+        map.add(marker);
+
+        //   引入和创建驾车规划插件
+        const driving = new AMap.Driving({
+            map: map,
+            panel: "panel",
+        });
+        document
+            .getElementById("showScoresBtn")
+            .addEventListener("click", function () {
+                driving.search([113.42857, 34.772388], [91.1173, 29.6578]);
+            });
+        const qd = document.getElementById("qdInput");
+        const zd = document.getElementById("zdInputs");
+        document.getElementById("show").addEventListener("click", function () {
+            // 根据起终点名称规划驾车导航路线
+            driving.search([{ keyword: qd.value }, { keyword: zd.value }]);
+        });
+    </script>
+</body>
+
+</html>

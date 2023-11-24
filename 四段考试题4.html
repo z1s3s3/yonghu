@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地图</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://www.isqqw.com/dep/echarts/map/js/china.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #word {
+            position: absolute;
+            top: 10px;
+            left: 0px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="word" style="width: 600px;height:400px;"></div>
+    <script>
+        var myChart = echarts.init(document.getElementById('word'));
+        option = {
+            backgroundColor: 'rgba(0, 10, 52, 1)',
+            // 地理坐标系组件
+            geo: {
+                show: true,
+                map: 'china',
+                roam: true, // 是否开启鼠标缩放移动和平移漫游
+                aspectScale: 0.75, //参数用于 scale 地图的长宽比。
+                // layoutCenter: ['50%', '51.5%'], //地图位置
+                // layoutSize: '110%', //地图的大小
+                label: {
+                    show: true,
+                    color: '#fff',
+                },
+                itemStyle: {
+                    normal: {
+                        borderColor: 'rgba(147, 235, 248, 1)',
+                        borderWidth: 1,
+                        areaColor: {
+                            type: 'radial',
+                            x: 0.5,
+                            y: 0.5,
+                            r: 0.8,
+                            colorStops: [{
+                                offset: 0,
+                                color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                            }, {
+                                offset: 1,
+                                color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                            }],
+                            globalCoord: false // 缺省为 false
+                        },
+                        shadowColor: 'rgba(128, 217, 248, 1)',
+                        // shadowColor: 'rgba(255, 255, 255, 1)',
+                        shadowOffsetX: -2,
+                        shadowOffsetY: 2,
+                        shadowBlur: 10
+                    },
+                    emphasis: {
+                        areaColor: '#389BB7',
+                        borderWidth: 0
+                    }
+                }
+            },
+
+            series: [
+                {
+                    type: 'map',
+                    map: 'china',
+                    aspectScale: 0.75,
+                    geoIndex: 0,
+                    roam: true,
+                    itemStyle: {
+                        normal: {
+                            areaColor: '#031525',
+                            borderColor: '#FFFFFF',
+                        },
+                        emphasis: {
+                            areaColor: '#2B91B7'
+                        }
+                    },
+                    animation: false
+                },
+            ],
+        };
+
+        //echarts 设置地图外边框以及多个geo实现缩放拖曳同步
+        myChart.on('georoam', function (params) {
+            var option = myChart.getOption(); //获得option对象
+            if (params.zoom != null && params.zoom != undefined) { //捕捉到缩放时
+                option.geo[0].zoom = option.series[0].zoom; //下层geo的缩放等级跟着上层的geo一起改变
+                option.geo[0].center = option.series[0].center; //下层的geo的中心位置随着上层geo一起改变
+            } else { //捕捉到拖曳时
+                option.geo[0].center = option.series[0].center; //下层的geo的中心位置随着上层geo一起改变
+            }
+            myChart.setOption(option); //设置option
+        });
+
+    </script>
+</body>
+
+</html>

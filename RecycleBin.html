@@ -93,52 +93,42 @@
         </thead>
         <tbody></tbody>
     </table>
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        底部固定区域
-    </div>
-    </div>
 </body>
 <script>
     $(function () {
         goodslist()
     })
-    //分页
-    // 给编辑按钮添加点击事件
-    $('tbody').on('click', '#search', function () {
+    //恢复按钮
+    $('tbody').on('click', '#huifu', function () {
         let id = $(this).data('id');
-        $.ajax({
-            url: `https://manage.zzgoodqc.cn/api/goods/${id}`,
-            type: 'GET',
-            headers: {
-                Authorization: localStorage.getItem("token"),
-            },
-            success: function (res) {
-                console.log(res);
-                // 将获取到的商品信息填充到弹窗中
-                $('#sort').val(res.data.sort);
-                $('#title').val(res.data.title); $('#price').val(res.data.price);
-                $('#stock').val(res.data.stock);
-                $('#thumbnail').val(res.data.thumbnail);
-                $('#description').val(res.data.description);
-                // 显示弹窗
-                $('.popup').show();
-            }
-        })
+        if (confirm(`确认恢复ID为${id}的商品吗？`)) {
+            $.ajax({
+                url: `https://manage.zzgoodqc.cn/api/goods/${id}`,
+                type: 'PATCH',
+                headers: {
+                    Authorization: localStorage.getItem("token"),
+                },
+                success: function (res) {
+                    console.log(res);
+                    alert('商品恢复成功');
+                    goodslist()
+                }
+            })
+        }
     });
+    // 给编辑按钮添加点击事件
     $('tbody').on('click', '#shanchu', function () {
         let id = $(this).data('id');
         if (confirm(`确认删除ID为${id}的数据吗？`)) {
             $.ajax({
-                url: `https://manage.zzgoodqc.cn/api/goods/solt/${id}`,
+                url: `https://manage.zzgoodqc.cn/api/goods/recycle/${id}`,
                 type: 'DELETE',
                 headers: {
                     Authorization: localStorage.getItem("token"),
                 },
                 success: function (res) {
                     console.log(res.data);
-                    // 从商品列表中移除删除的商品
-                    $('tbody').find('[data-id="' + id + '"]').parents('tr').remove();
+                    // 从回收站列表中删除的商品
                     alert('删除成功');
                     goodslist()
                 }
@@ -146,32 +136,6 @@
             })
         }
     });
-    $('tbody').on('click', '#search', function () {
-        let id = $(this).data('id');
-        $.ajax({
-            url: `https://manage.zzgoodqc.cn/api/goods/${id}`,
-            type: 'GET',
-            headers: {
-                Authorization: localStorage.getItem("token"),
-            },
-            success: function (res) {
-                console.log(res);
-                // 将获取到的商品信息填充到弹窗中
-                $('#sort').val(res.data.sort);
-                $('#title').val(res.data.title); $('#price').val(res.data.price);
-                $('#stock').val(res.data.stock);
-                $('#thumbnail').val(res.data.thumbnail);
-                $('#description').val(res.data.description);
-                // 显示弹窗
-                $('.popup').show();
-            }
-        })
-    });
-    // 按钮添加点击事件
-    $('#add-Btn').on('click', function () {
-        $('#editPopup').show();
-    })
-
     $('#closePopup').on('click', function () {
         $('#editPopup').hide();
     })
@@ -238,7 +202,7 @@
                     <td>${item.actual_sales}</td>
                     <td>${item.create_time}</td>
                     <td>
-                        <button class="search" id="search" data-id="${item.id}">编辑</button>
+                        <button class="search" id="huifu" data-id="${item.id}">恢复</button>
                         <button class="search" id="shanchu" data-id="${item.id}">删除</button>
                     </td>
                 </tr>

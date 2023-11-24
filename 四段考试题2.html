@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计量图</title>
+    <script src="../四段/node_modules/echarts/dist/echarts.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            position: absolute;
+            top: 10px;
+            left: 0px;
+            width: 600px;
+            height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('main'));
+        var xData = function () {
+            var data = [];
+            for (var i = 0; i < 24; i++) {
+                data.push(i + "日");
+            }
+            return data;
+        }();
+
+        option = {
+            backgroundColor: "#1A1835",
+
+            tooltip: {
+                trigger: "axis",
+                axisPointer: {
+                    type: "shadow",
+                    textStyle: {
+                        color: "#fff"
+                    }
+
+                },
+            },
+            grid: {
+                borderWidth: 0,
+                top: 110,
+                bottom: 95,
+                textStyle: {
+                    color: "#fff"
+                }
+            },
+            legend: {
+                x: '46%',
+                top: '11%',
+                textStyle: {
+                    color: '#90979c',
+                },
+                data: ['浏览量',]
+            },
+
+
+            calculable: true,
+            xAxis: [{
+                type: "category",
+                axisLine: {
+                    lineStyle: {
+                        color: "rgba(204,187,225,0.5)",
+                    }
+                },
+                splitLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                data: xData,
+            }],
+
+            yAxis: [{
+                type: "value",
+                max: 20,
+                min: 0,
+                splitLine: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: "rgba(204,187,225,0.5)",
+                    }
+                },
+
+            }],
+            dataZoom: [{
+                type: 'slider',
+                show: false,
+                realtime: true,
+                startValue: 0,
+                endValue: 24
+            }],
+            series: [{
+                name: "访问量",
+                type: "line",
+                symbolSize: 10,
+                symbol: 'circle',
+                itemStyle: {
+                    color: "#6f7de3",
+                },
+                markPoint: {
+                    label: {
+                        normal: {
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    data: [{
+                        type: 'max',
+                        name: '最大值',
+
+                    }, {
+                        type: 'min',
+                        name: '最小值'
+                    }]
+                },
+                data: [
+                    0, 0, 0, 0, 0, 0, 18, 10, 5, 7, 3, 0, 0, 10, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                ],
+            },
+            {
+                name: "订单量",
+                type: "line",
+                symbolSize: 10,
+                symbol: 'circle',
+                itemStyle: {
+                    color: "#c257F6",
+                },
+                markPoint: {
+                    label: {
+                        normal: {
+                            textStyle: {
+                                color: '#fff'
+                            }
+                        }
+                    },
+                    data: [{
+                        type: 'max',
+                        name: '最大值',
+
+                    }, {
+                        type: 'min',
+                        name: '最小值'
+                    }]
+                },
+                data: [
+                    0, 0, 0, 0, 0, 0, 18, 10, 5, 7, 3, 0, 0, 10, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0
+                ],
+            },
+            ]
+        }
+        setInterval(function () {
+            var data0 = option.series[0].data;
+            data0.push(Math.random());
+            myChart.setOption(option);
+        }, 3000);
+        myChart.setOption(option);
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轮番图</title>
+    <link rel="stylesheet" href="../四段/swiper/swiper-bundle.min.css">
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        body {
+            background: #000;
+            color: #000;
+        }
+
+        .swiper {
+            width: 42%;
+            height: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .swiper-slide {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .mySwiper2 {
+            height: 80%;
+            width: 100%;
+        }
+
+        .mySwiper {
+            height: 20%;
+            box-sizing: border-box;
+            padding: 10px 0;
+            position: absolute;
+            right: 195px;
+            top: 240px;
+        }
+
+        .mySwiper .swiper-slide {
+            width: 25%;
+            height: 100%;
+            opacity: 0.4;
+        }
+
+        .mySwiper .swiper-slide-thumb-active {
+            opacity: 1;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .banner {
+            margin: auto;
+            width: 1100px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+        <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img
+                        src="https://webstatic.mihoyo.com/upload/contentweb/2023/03/08/3b96c6c4f3b4d265f2ba64e053753ce6_4749531332506649085.png" />
+                </div>
+                <div class="swiper-slide">
+                    <img
+                        src="https://webstatic.mihoyo.com/upload/contentweb/2022/08/12/e1711495a7b803711e0fa1907d665551_7518678854448681603.png" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://uploadstatic.mihoyo.com/contentweb/20220121/2022012116375784415.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://uploadstatic.mihoyo.com/contentweb/20210721/2021072119142826586.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://uploadstatic.mihoyo.com/contentweb/20210201/2021020114084334134.jpg" />
+                </div>
+            </div>
+        </div>
+        <div thumbsSlider="" class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img
+                        src="https://webstatic.mihoyo.com/upload/contentweb/2023/03/08/6945dd91b7461711a9006e794c7a28e6_850712920918882297.png" />
+                </div>
+                <div class="swiper-slide">
+                    <img
+                        src="https://webstatic.mihoyo.com/upload/contentweb/2022/08/12/5cc9e7d9e5b59529f786801c97414e56_8642774847250475530.png" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://uploadstatic.mihoyo.com/contentweb/20220121/2022012116380715763.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://uploadstatic.mihoyo.com/contentweb/20210721/2021072119143479921.jpg" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://uploadstatic.mihoyo.com/contentweb/20210201/2021020114084526332.jpg" />
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Swiper JS -->
+    <script src="../四段/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 10,
+            slidesPerView: 5,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            spaceBetween: 10,
+            // navigation: {
+            //     nextEl: ".swiper-button-next",
+            //     prevEl: ".swiper-button-prev",
+            // },
+            thumbs: {
+                swiper: swiper,
+            },
+        });
+    </script>
+</body>
+
+</html>

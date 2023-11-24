@@ -130,9 +130,10 @@
         $('#btncaptcha').click(function (event) {
             event.preventDefault();
             let phon = $('#mobile').val();
-            $.get('https://manage.zzgoodqc.cn/api/user/captcha' + phon,
+            $.get('https://manage.zzgoodqc.cn/api/user/captcha?mobile=' + phon,
                 function (res) {
-                    $('#captchadiv').html(res)
+                    console.log(res);
+                    $('#captchadiv').html(res);
                 });
         });
         // 注册成功按钮 
@@ -153,7 +154,7 @@
                 captcha: captcha,
             }
             $.ajax({
-                url: 'http://manage.zzgoodqc.cn/api/user/register',
+                url: 'https://manage.zzgoodqc.cn/api/user/register',
                 type: 'POST',
                 data: obj,
                 success: function (data) {
