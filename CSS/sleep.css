@@ -1,0 +1,120 @@
+@font-face {
+    font-family: "iconfont";
+    /* Project id 4355162 */
+    src: url('//at.alicdn.com/t/c/font_4355162_bj733c6zd8l.woff2?t=1701434259223') format('woff2'),
+        url('//at.alicdn.com/t/c/font_4355162_bj733c6zd8l.woff?t=1701434259223') format('woff'),
+        url('//at.alicdn.com/t/c/font_4355162_bj733c6zd8l.ttf?t=1701434259223') format('truetype');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-xiala-xia:before {
+    content: "\e615";
+    font-size: 20px;
+}
+
+.icon-tianjia:before {
+    content: "\e620";
+    font-size: 35px;
+}
+
+.icon-bofangfmbofangliebiao:before {
+    content: "\e62f";
+    font-size: 35px;
+}
+
+.icon-bofangcopy:before {
+    content: "\e621";
+    font-size: 35px;
+}
+
+.icon-beike:before {
+    content: "\e60e";
+    font-size: 135px;
+}
+
+.icon-pingguo:before {
+    content: "\e61a";
+    font-size: 35px;
+}
+
+.icon-yu:before {
+    content: "\e62e";
+    font-size: 35px;
+}
+
+.icon-huomiao:before {
+    content: "\e618";
+    font-size: 35px;
+}
+
+.icon-shupian_:before {
+    content: "\e63b";
+    font-size: 35px;
+}
+
+.icon-happiness_icon-:before {
+    content: "\e60d";
+    font-size: 35px;
+}
+
+.icon-miantiao:before {
+    content: "\e626";
+    font-size: 35px;
+}
+
+.icon-bingshui:before {
+    content: "\e607";
+    font-size: 35px;
+}
+
+.icon-jisuangongshi:before {
+    content: "\e697";
+    font-size: 35px;
+}
+
+.icon-me_translate:before {
+    content: "\e61f";
+    font-size: 35px;
+}
+
+.icon-jingxuanfuwu-shouye-jingxuanyouzhi:before {
+    content: "\e63a";
+    font-size: 35px;
+}
+
+.icon-mountains:before {
+    content: "\e605";
+    font-size: 35px;
+}
+
+.icon-zhumianfang:before {
+    content: "\e6db";
+    font-size: 35px;
+}
+
+.icon-yueliang:before {
+    content: "\e744";
+    font-size: 35px;
+}
+
+.icon-huxi:before {
+    content: "\e600";
+    font-size: 35px;
+}
+
+.icon-yingyu:before {
+    content: "\e6dd";
+    font-size: 35px;
+}
+
+.icon-wode:before {
+    content: "\e601";
+    font-size: 35px;
+}
